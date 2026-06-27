@@ -1,0 +1,687 @@
+
+```html
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>متمكّن رياضيات ١ | الرخصة المهنية</title>
+  <style>
+    :root{
+      --bg:#07111f;
+      --card:#101f33;
+      --card2:#142943;
+      --text:#f7fbff;
+      --muted:#b8c7d9;
+      --gold:#f3c96b;
+      --blue:#38bdf8;
+      --green:#22c55e;
+      --red:#ef4444;
+      --orange:#f97316;
+      --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,.25), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(243,201,107,.25), transparent 35%),
+        linear-gradient(135deg,#06101d,#0b1728 50%,#07111f);
+      color:var(--text);
+      line-height:1.9;
+    }
+    a{color:inherit}
+    .wrap{max-width:1180px;margin:auto;padding:18px}
+    .hero{
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:28px;
+      background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.03));
+      box-shadow:0 25px 80px rgba(0,0,0,.35);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:before{
+      content:"";
+      position:absolute;
+      width:320px;height:320px;
+      background:radial-gradient(circle,rgba(243,201,107,.20),transparent 70%);
+      left:-90px;top:-110px;
+    }
+    .topbar{
+      display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      position:relative;z-index:2;
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{
+      width:76px;height:76px;border-radius:24px;
+      background:linear-gradient(135deg,#0ea5e9,#22c55e,#f59e0b);
+      display:grid;place-items:center;
+      box-shadow:0 14px 35px rgba(0,0,0,.35);
+      border:2px solid rgba(255,255,255,.35);
+      font-size:30px;font-weight:900;
+    }
+    h1{font-size:clamp(30px,5vw,54px);margin:18px 0 8px;line-height:1.25}
+    h2{font-size:clamp(24px,3vw,34px);margin:24px 0 12px}
+    h3{font-size:22px;margin:14px 0 8px}
+    .subtitle{color:var(--muted);font-size:18px;max-width:850px}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 14px;border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:14px;
+    }
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+    button,.btn{
+      border:0;
+      border-radius:16px;
+      padding:12px 18px;
+      font-weight:800;
+      cursor:pointer;
+      color:#07111f;
+      background:linear-gradient(135deg,var(--gold),#fff3bd);
+      box-shadow:0 10px 25px rgba(0,0,0,.22);
+      transition:.2s;
+    }
+    button:hover,.btn:hover{transform:translateY(-2px)}
+    button.secondary{background:rgba(255,255,255,.10);color:var(--text);border:1px solid var(--border)}
+    button.blue{background:linear-gradient(135deg,#38bdf8,#93e7ff)}
+    button.green{background:linear-gradient(135deg,#22c55e,#b5f7c6)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:18px}
+    .card{
+      grid-column:span 4;
+      background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.04));
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:0 14px 40px rgba(0,0,0,.22);
+    }
+    .card.big{grid-column:span 8}
+    .card.full{grid-column:1/-1}
+    .stat{
+      font-size:32px;
+      font-weight:900;
+      color:var(--gold);
+      margin:4px 0;
+    }
+    .muted{color:var(--muted)}
+    .nav{
+      display:flex;gap:10px;flex-wrap:wrap;margin:22px 0;
+      position:sticky;top:0;z-index:20;
+      padding:12px 0;
+      backdrop-filter:blur(14px);
+    }
+    .nav button{padding:10px 14px;border-radius:999px}
+    .standard{
+      padding:14px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(255,255,255,.06);
+      margin-bottom:10px;
+    }
+    .standard b{color:var(--gold)}
+    .question{
+      background:rgba(255,255,255,.07);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:18px;
+      margin:14px 0;
+    }
+    .choices{display:grid;gap:10px;margin-top:12px}
+    .choice{
+      text-align:right;
+      width:100%;
+      background:rgba(255,255,255,.10);
+      color:var(--text);
+      border:1px solid var(--border);
+      box-shadow:none;
+    }
+    .choice.correct{background:rgba(34,197,94,.20);border-color:rgba(34,197,94,.8)}
+    .choice.wrong{background:rgba(239,68,68,.20);border-color:rgba(239,68,68,.8)}
+    .explain{
+      display:none;
+      margin-top:14px;
+      padding:16px;
+      border-radius:18px;
+      background:rgba(0,0,0,.22);
+      border:1px solid var(--border);
+    }
+    .tag{
+      display:inline-block;
+      margin:4px 0 4px 6px;
+      padding:5px 10px;
+      border-radius:999px;
+      background:rgba(56,189,248,.14);
+      color:#c9f3ff;
+      border:1px solid rgba(56,189,248,.25);
+      font-size:13px;
+    }
+    .result{
+      padding:18px;
+      border-radius:22px;
+      background:linear-gradient(135deg,rgba(34,197,94,.18),rgba(56,189,248,.12));
+      border:1px solid var(--border);
+      margin-top:18px;
+      display:none;
+    }
+    .bar{
+      height:12px;background:rgba(255,255,255,.10);border-radius:999px;overflow:hidden;margin:8px 0 16px;
+    }
+    .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--gold));width:0}
+    footer{text-align:center;color:var(--muted);padding:35px 10px}
+    @media(max-width:850px){
+      .card,.card.big{grid-column:1/-1}
+      .hero{padding:20px}
+      .logo{width:64px;height:64px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <section class="hero" id="home">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo">π+</div>
+          <div>
+            <div class="pill">نسخة تعليمية تفاعلية</div>
+            <h1>متمكّن رياضيات ١</h1>
+          </div>
+        </div>
+        <div class="pill">ملتقى معلمي ومعلمات الرياضيات</div>
+      </div>
+
+      <p class="subtitle">
+        منصة شاملة للاستعداد لاختبار الرخصة المهنية رياضيات ١ للمعلمين والمعلمات،
+        مبنية على المجالات التي زودتِني بها، مع أسئلة أصلية وشرح تدريبي تفصيلي لكل مسألة.
+      </p>
+
+      <div class="btns">
+        <button onclick="startQuiz('diagnostic')">ابدأ الاختبار التشخيصي</button>
+        <button class="blue" onclick="showSection('bank')">استعرض بنك الأسئلة</button>
+        <button class="secondary" onclick="showSection('standards')">المجالات والمعايير</button>
+        <button class="green" onclick="startQuiz('mock')">اختبار محاكي</button>
+      </div>
+    </section>
+
+    <div class="nav">
+      <button class="secondary" onclick="showSection('home')">الرئيسية</button>
+      <button class="secondary" onclick="showSection('standards')">المجالات</button>
+      <button class="secondary" onclick="showSection('bank')">بنك الأسئلة</button>
+      <button class="secondary" onclick="showSection('plan')">خطة ٣٠ يوم</button>
+    </div>
+
+    <section class="grid">
+      <div class="card">
+        <div class="muted">عدد المجالات</div>
+        <div class="stat" id="stdCount">20</div>
+        <div>مجالًا رئيسيًا في رياضيات ١</div>
+      </div>
+      <div class="card">
+        <div class="muted">عدد الأسئلة الحالية</div>
+        <div class="stat" id="qCount">20</div>
+        <div>قابلة للتوسعة حتى ١٢٠ سؤالًا وأكثر</div>
+      </div>
+      <div class="card">
+        <div class="muted">آخر نتيجة</div>
+        <div class="stat" id="lastScore">—</div>
+        <div>تحفظ تلقائيًا على الجهاز</div>
+      </div>
+    </section>
+
+    <section id="standards" class="grid" style="display:none">
+      <div class="card full">
+        <h2>المجالات والمعايير المعتمدة في المنصة</h2>
+        <p class="muted">هذه القائمة مبنية على المجالات التي أرسلتِها، وفصلتها لتظهر بوضوح داخل المنصة.</p>
+        <div id="standardsList"></div>
+      </div>
+    </section>
+
+    <section id="bank" class="grid" style="display:none">
+      <div class="card full">
+        <h2>بنك الأسئلة مع الشرح التفصيلي</h2>
+        <p class="muted">اضغطي على أي إجابة، وسيظهر الشرح التفصيلي: الفكرة، خطوات الحل، القانون، تحليل الخيارات، والتنبيه الشائع.</p>
+        <div id="bankList"></div>
+      </div>
+    </section>
+
+    <section id="quiz" class="grid" style="display:none">
+      <div class="card full">
+        <h2 id="quizTitle">اختبار</h2>
+        <div class="muted" id="quizMeta"></div>
+        <div class="bar"><span id="progressBar"></span></div>
+        <div id="quizBox"></div>
+        <div class="btns">
+          <button class="secondary" onclick="nextQuestion()">السؤال التالي</button>
+          <button onclick="finishQuiz()">إنهاء الاختبار</button>
+        </div>
+        <div class="result" id="resultBox"></div>
+      </div>
+    </section>
+
+    <section id="plan" class="grid" style="display:none">
+      <div class="card full">
+        <h2>خطة الاستعداد ٣٠ يوم</h2>
+        <div class="standard"><b>الأسبوع الأول:</b> الأعداد، العمليات، نظرية الأعداد، الأعداد النسبية، الأسس والجذور.</div>
+        <div class="standard"><b>الأسبوع الثاني:</b> النسبة والتناسب، العبارات الجبرية، المعادلات، المتباينات، العلاقات والدوال.</div>
+        <div class="standard"><b>الأسبوع الثالث:</b> الزوايا والمضلعات، المثلث، الأشكال الرباعية، الدائرة، الهندسة التحليلية.</div>
+        <div class="standard"><b>الأسبوع الرابع:</b> القياس ووحداته، المجسمات، الإحصاء، الاحتمالات، المنطق، والتربوي.</div>
+        <div class="standard"><b>آخر يومين:</b> اختبار محاكي، مراجعة الأخطاء، حفظ القوانين، ومراجعة التنبيهات الشائعة.</div>
+      </div>
+    </section>
+
+    <footer>
+      إعداد وتصميم: أ/ فاطمة هزازي — ملتقى التعليم التفاعلي
+    </footer>
+  </div>
+
+<script>
+const standards = [
+  ["الأعداد والعمليات عليها","فهم خصائص الأعداد والعمليات وترتيبها والتقدير والحساب الذهني."],
+  ["المفاهيم الأساسية لنظرية الأعداد","القواسم، المضاعفات، الأولية، التحليل إلى عوامل، القاسم المشترك والمضاعف المشترك."],
+  ["الأعداد النسبية","الكسور، الأعداد العشرية، النسبة المئوية، المقارنة، والتحويل بينها."],
+  ["الأسس والجذور","قوانين الأسس، الجذور التربيعية، التبسيط، والعمليات عليها."],
+  ["النسبة والتناسب","النسب المتكافئة، التناسب، المعدل، المقياس، وحل مسائل التناسب."],
+  ["المجموعات والعبارات الجبرية","المجموعات، الاتحاد والتقاطع، تبسيط العبارات الجبرية، والتعويض."],
+  ["المعادلات","حل المعادلات الخطية والتربيعية البسيطة وتفسير الحل."],
+  ["المتباينات","حل المتباينات وتمثيل مجموعة الحل وفهم اتجاه إشارة المتباينة."],
+  ["العلاقات والدوال","مفهوم الدالة، المجال والمدى، التمثيل البياني، وقيم الدوال."],
+  ["الزوايا والمضلعات","أنواع الزوايا، علاقات الزوايا، مجموع زوايا المضلعات."],
+  ["المثلث","خصائص المثلثات، مجموع الزوايا، فيثاغورس، والمساحة."],
+  ["الأشكال الرباعية","خصائص متوازي الأضلاع، المستطيل، المربع، المعين، وشبه المنحرف."],
+  ["الدائرة","نصف القطر، القطر، المحيط، المساحة، الزوايا المرتبطة بالدائرة."],
+  ["الهندسة التحليلية","الإحداثيات، الميل، المسافة، المنتصف، وتمثيل المستقيم."],
+  ["القياس ووحداته","التحويل بين الوحدات، الطول، الكتلة، السعة، الزمن، والمساحة."],
+  ["المجسمات","الحجم، المساحة السطحية، المكعب، متوازي المستطيلات، الأسطوانة، والكرة."],
+  ["الإحصاء","المتوسط، الوسيط، المنوال، المدى، قراءة الجداول والتمثيلات."],
+  ["الاحتمالات","فضاء العينة، الحدث، الاحتمال النظري، والاحتمال التجريبي."],
+  ["المنطق والاستدلال الرياضي","العبارات الشرطية، الصواب والخطأ، الاستنتاج، والتبرير."],
+  ["التربوي","استراتيجيات تدريس الرياضيات، التقويم، علاج الأخطاء، وبناء المفاهيم."]
+];
+
+const questions = [
+{
+std:"الأعداد والعمليات عليها",
+q:"ما قيمة العبارة: 18 - 3 × 4 + 10 ؟",
+choices:["100","16","70","4"],
+answer:1,
+idea:"يقيس السؤال فهم ترتيب العمليات الحسابية.",
+steps:["نبدأ بالضرب قبل الجمع والطرح: 3 × 4 = 12.","تصبح العبارة: 18 - 12 + 10.","نحسب من اليمين إلى اليسار حسب الترتيب في الجمع والطرح: 6 + 10 = 16."],
+rule:"عند وجود ضرب أو قسمة مع جمع أو طرح، ننفذ الضرب والقسمة أولًا.",
+analysis:["100 خطأ لأنه ناتج عن تجاهل ترتيب العمليات.","16 صحيح.","70 خطأ لأنه تم الجمع قبل الضرب.","4 خطأ لأنه ناتج عن ترتيب غير صحيح."],
+tip:"في الرخصة المهنية، انتبهي لعبارات ترتيب العمليات لأنها من أكثر الأخطاء شيوعًا."
+},
+{
+std:"المفاهيم الأساسية لنظرية الأعداد",
+q:"ما أكبر قاسم مشترك بين 18 و 24 ؟",
+choices:["2","3","6","12"],
+answer:2,
+idea:"يقيس السؤال القدرة على إيجاد القاسم المشترك الأكبر.",
+steps:["قواسم 18 هي: 1، 2، 3، 6، 9، 18.","قواسم 24 هي: 1، 2، 3، 4، 6، 8، 12، 24.","أكبر عدد مشترك بين القائمتين هو 6."],
+rule:"القاسم المشترك الأكبر هو أكبر عدد يقسم العددين دون باقٍ.",
+analysis:["2 قاسم مشترك لكنه ليس الأكبر.","3 قاسم مشترك لكنه ليس الأكبر.","6 صحيح.","12 لا يقسم 18."],
+tip:"استخدمي التحليل إلى عوامل أولية عندما تكون الأعداد كبيرة."
+},
+{
+std:"الأعداد النسبية",
+q:"ناتج: 1/2 - 3/4 يساوي:",
+choices:["1/4","-1/4","2/4","-2/4"],
+answer:1,
+idea:"يقيس السؤال العمليات على الكسور ذات المقامات المختلفة.",
+steps:["نوحد المقامات: 1/2 = 2/4.","نطرح: 2/4 - 3/4 = -1/4.","إذن الناتج هو -1/4."],
+rule:"عند جمع أو طرح الكسور لا بد من توحيد المقامات أولًا.",
+analysis:["1/4 خطأ لأن الطرح عكس الاتجاه.","-1/4 صحيح.","2/4 يمثل 1/2 وليس الناتج.","-2/4 لا يساوي الناتج المبسط."],
+tip:"انتبهي للإشارة السالبة عند طرح كسر أكبر من كسر أصغر."
+},
+{
+std:"الأسس والجذور",
+q:"ما قيمة: √49 + 2³ ؟",
+choices:["15","13","10","21"],
+answer:0,
+idea:"يقيس السؤال فهم الجذور والأسس.",
+steps:["الجذر التربيعي لـ 49 هو 7.","2³ تعني 2 × 2 × 2 = 8.","المجموع: 7 + 8 = 15."],
+rule:"الجذر التربيعي هو العدد الذي إذا ضرب في نفسه أعطى العدد الأصلي.",
+analysis:["15 صحيح.","13 خطأ لأن 2³ ليست 6.","10 خطأ لأن الجذر أو الأس غير محسوب صحيحًا.","21 خطأ بسبب جمع غير صحيح."],
+tip:"فرقي بين 2³ و 3²، فالأولى تساوي 8 والثانية تساوي 9."
+},
+{
+std:"النسبة والتناسب",
+q:"إذا كان 3/5 = x/20، فما قيمة x ؟",
+choices:["8","10","12","15"],
+answer:2,
+idea:"يقيس السؤال حل التناسب.",
+steps:["نستخدم الضرب التبادلي: 3 × 20 = 5 × x.","60 = 5x.","نقسم الطرفين على 5 فنحصل على x = 12."],
+rule:"في التناسب: a/b = c/d فإن a × d = b × c.",
+analysis:["8 خطأ.","10 خطأ.","12 صحيح.","15 خطأ."],
+tip:"في مسائل النسبة والتناسب اكتبي الضرب التبادلي بهدوء قبل الحساب."
+},
+{
+std:"المجموعات والعبارات الجبرية",
+q:"تبسيط العبارة: 2x + 3x - 4 يساوي:",
+choices:["5x - 4","6x - 4","x - 4","5x + 4"],
+answer:0,
+idea:"يقيس السؤال جمع الحدود المتشابهة.",
+steps:["الحدان 2x و 3x متشابهان لأن لهما المتغير نفسه.","نجمع المعاملات: 2 + 3 = 5.","تبقى -4 كما هي، إذن الناتج 5x - 4."],
+rule:"الحدود المتشابهة هي التي لها المتغيرات نفسها والأسس نفسها.",
+analysis:["5x - 4 صحيح.","6x - 4 خطأ لأن 2 + 3 لا يساوي 6.","x - 4 خطأ بسبب طرح المعاملات بدل جمعها.","5x + 4 خطأ لأن إشارة 4 تغيرت."],
+tip:"لا تجمعي الحدود الثابتة مع الحدود التي تحتوي متغيرًا."
+},
+{
+std:"المعادلات",
+q:"حل المعادلة: 2x + 5 = 17 هو:",
+choices:["x = 5","x = 6","x = 7","x = 11"],
+answer:1,
+idea:"يقيس السؤال حل معادلة خطية بسيطة.",
+steps:["نطرح 5 من الطرفين: 2x = 12.","نقسم الطرفين على 2: x = 6.","نتحقق: 2×6 + 5 = 17."],
+rule:"لحل المعادلات نحافظ على التوازن بإجراء العملية نفسها على الطرفين.",
+analysis:["x = 5 يعطي 15 وليس 17.","x = 6 صحيح.","x = 7 يعطي 19.","x = 11 يعطي 27."],
+tip:"التحقق بالتعويض خطوة مهمة في اختبار الرخصة."
+},
+{
+std:"المتباينات",
+q:"حل المتباينة: 3x - 2 < 10 هو:",
+choices:["x < 4","x > 4","x < 12","x > 12"],
+answer:0,
+idea:"يقيس السؤال حل متباينة خطية.",
+steps:["نضيف 2 للطرفين: 3x < 12.","نقسم على 3: x < 4.","إذن مجموعة الحل كل عدد أصغر من 4."],
+rule:"عند القسمة أو الضرب في عدد موجب لا يتغير اتجاه المتباينة.",
+analysis:["x < 4 صحيح.","x > 4 عكس الاتجاه.","x < 12 لم يتم القسمة على 3.","x > 12 خطأ في الاتجاه والحساب."],
+tip:"تتغير إشارة المتباينة فقط عند الضرب أو القسمة في عدد سالب."
+},
+{
+std:"العلاقات والدوال",
+q:"إذا كانت f(x)=2x-1، فما قيمة f(4) ؟",
+choices:["6","7","8","9"],
+answer:1,
+idea:"يقيس السؤال التعويض في الدالة.",
+steps:["نعوض x = 4 في الدالة.","f(4)=2×4-1.","f(4)=8-1=7."],
+rule:"قيمة الدالة عند عدد معين نحصل عليها بالتعويض عن المتغير بذلك العدد.",
+analysis:["6 خطأ.","7 صحيح.","8 هو ناتج 2×4 قبل طرح 1.","9 خطأ لأنه جمع بدل الطرح."],
+tip:"في الدوال اقرئي الرمز f(4) بمعنى قيمة الدالة عندما x يساوي 4."
+},
+{
+std:"الزوايا والمضلعات",
+q:"مجموع الزوايا الداخلية لمضلع سداسي يساوي:",
+choices:["360°","540°","720°","900°"],
+answer:2,
+idea:"يقيس السؤال قانون مجموع زوايا المضلع.",
+steps:["عدد أضلاع السداسي n = 6.","نستخدم القانون: (n - 2) × 180.","(6 - 2) × 180 = 4 × 180 = 720."],
+rule:"مجموع الزوايا الداخلية لمضلع عدد أضلاعه n هو: (n - 2) × 180°.",
+analysis:["360° مجموع زوايا رباعي.","540° مجموع زوايا خماسي.","720° صحيح.","900° خطأ."],
+tip:"اربطي القانون بتقسيم المضلع إلى مثلثات."
+},
+{
+std:"المثلث",
+q:"في مثلث زاويتان قياسهما 50° و 60°، فما قياس الزاوية الثالثة؟",
+choices:["60°","70°","80°","90°"],
+answer:1,
+idea:"يقيس السؤال خاصية مجموع زوايا المثلث.",
+steps:["مجموع زوايا المثلث 180°.","نجمع الزاويتين: 50 + 60 = 110°.","الزاوية الثالثة = 180 - 110 = 70°."],
+rule:"مجموع قياسات زوايا أي مثلث يساوي 180°.",
+analysis:["60° خطأ.","70° صحيح.","80° خطأ.","90° خطأ."],
+tip:"هذه من القواعد الأساسية التي تتكرر كثيرًا في الهندسة."
+},
+{
+std:"الأشكال الرباعية",
+q:"أي عبارة صحيحة دائمًا في متوازي الأضلاع؟",
+choices:["كل زواياه قائمة","أقطاره متساوية دائمًا","كل أضلاعه متساوية دائمًا","كل ضلعين متقابلين متوازيان"],
+answer:3,
+idea:"يقيس السؤال خصائص الأشكال الرباعية.",
+steps:["متوازي الأضلاع يعرف بأن كل ضلعين متقابلين فيه متوازيان.","ليست كل زواياه قائمة؛ هذا خاص بالمستطيل.","ليست أقطاره متساوية دائمًا.","ليست كل أضلاعه متساوية دائمًا؛ هذا خاص بالمعين."],
+rule:"خاصية متوازي الأضلاع الأساسية: كل ضلعين متقابلين متوازيان ومتساويان.",
+analysis:["كل زواياه قائمة ليست صحيحة دائمًا.","أقطاره متساوية دائمًا ليست صحيحة دائمًا.","كل أضلاعه متساوية دائمًا ليست صحيحة دائمًا.","كل ضلعين متقابلين متوازيان صحيح."],
+tip:"ميزي بين المستطيل والمعين والمربع ومتوازي الأضلاع."
+},
+{
+std:"الدائرة",
+q:"محيط دائرة نصف قطرها 7 سم يساوي:",
+choices:["7π","14π","49π","21π"],
+answer:1,
+idea:"يقيس السؤال استخدام قانون محيط الدائرة.",
+steps:["قانون محيط الدائرة: C = 2πr.","نعوض r = 7.","C = 2 × π × 7 = 14π."],
+rule:"محيط الدائرة = 2πr أو πd.",
+analysis:["7π نصف الناتج.","14π صحيح.","49π يرتبط غالبًا بالمساحة وليس المحيط.","21π خطأ حسابي."],
+tip:"إذا أعطي نصف القطر استخدمي 2πr، وإذا أعطي القطر استخدمي πd."
+},
+{
+std:"الهندسة التحليلية",
+q:"ميل المستقيم المار بالنقطتين (1,2) و (3,6) يساوي:",
+choices:["1","2","3","4"],
+answer:1,
+idea:"يقيس السؤال حساب الميل من نقطتين.",
+steps:["قانون الميل: m = (y2 - y1) / (x2 - x1).","نعوض: m = (6 - 2) / (3 - 1).","m = 4 / 2 = 2."],
+rule:"الميل يمثل معدل التغير الرأسي إلى التغير الأفقي.",
+analysis:["1 خطأ.","2 صحيح.","3 خطأ.","4 هو الفرق الرأسي فقط وليس الميل."],
+tip:"لا تنسي طرح الإحداثيات بالترتيب نفسه في البسط والمقام."
+},
+{
+std:"القياس ووحداته",
+q:"3.5 متر تساوي كم سنتيمترًا؟",
+choices:["35","350","3500","0.35"],
+answer:1,
+idea:"يقيس السؤال التحويل بين وحدات الطول.",
+steps:["كل متر يساوي 100 سنتيمتر.","3.5 × 100 = 350.","إذن 3.5 متر = 350 سنتيمترًا."],
+rule:"للتحويل من متر إلى سنتيمتر نضرب في 100.",
+analysis:["35 خطأ لأن الضرب كان في 10.","350 صحيح.","3500 خطأ لأن الضرب كان في 1000.","0.35 تحويل عكسي غير صحيح."],
+tip:"عند التحويل من وحدة كبيرة إلى أصغر نضرب غالبًا."
+},
+{
+std:"المجسمات",
+q:"حجم مكعب طول حرفه 4 سم يساوي:",
+choices:["16 سم³","32 سم³","64 سم³","96 سم³"],
+answer:2,
+idea:"يقيس السؤال قانون حجم المكعب.",
+steps:["قانون حجم المكعب: V = s³.","نعوض s = 4.","V = 4³ = 4 × 4 × 4 = 64."],
+rule:"حجم المكعب يساوي طول الحرف مرفوعًا للقوة الثالثة.",
+analysis:["16 يمثل 4² وليس الحجم.","32 خطأ.","64 صحيح.","96 خطأ."],
+tip:"الحجم بوحدة مكعبة مثل سم³، أما المساحة بوحدة مربعة مثل سم²."
+},
+{
+std:"الإحصاء",
+q:"المتوسط الحسابي للقيم: 2، 4، 6، 8 هو:",
+choices:["4","5","6","8"],
+answer:1,
+idea:"يقيس السؤال حساب المتوسط الحسابي.",
+steps:["نجمع القيم: 2 + 4 + 6 + 8 = 20.","عدد القيم 4.","المتوسط = 20 ÷ 4 = 5."],
+rule:"المتوسط الحسابي = مجموع القيم ÷ عددها.",
+analysis:["4 خطأ.","5 صحيح.","6 خطأ.","8 أكبر قيمة وليس المتوسط."],
+tip:"لا تخلطي بين المتوسط والوسيط والمنوال."
+},
+{
+std:"الاحتمالات",
+q:"عند رمي حجر نرد منتظم، احتمال ظهور عدد زوجي هو:",
+choices:["1/6","1/3","1/2","2/3"],
+answer:2,
+idea:"يقيس السؤال الاحتمال النظري.",
+steps:["نواتج حجر النرد: 1، 2، 3، 4، 5، 6.","الأعداد الزوجية هي: 2، 4، 6 وعددها 3.","الاحتمال = 3/6 = 1/2."],
+rule:"الاحتمال = عدد النواتج المرغوبة ÷ عدد النواتج الكلية.",
+analysis:["1/6 احتمال ظهور عدد محدد واحد.","1/3 خطأ.","1/2 صحيح.","2/3 خطأ."],
+tip:"ابدئي دائمًا بكتابة فضاء العينة إذا كان السؤال احتمالات."
+},
+{
+std:"المنطق والاستدلال الرياضي",
+q:"العبارة الشرطية: إذا كان p فإن q تكون خاطئة فقط عندما:",
+choices:["p صحيحة و q صحيحة","p صحيحة و q خاطئة","p خاطئة و q صحيحة","p خاطئة و q خاطئة"],
+answer:1,
+idea:"يقيس السؤال فهم صدق العبارة الشرطية.",
+steps:["العبارة الشرطية تعد وعدًا: إذا تحقق الشرط p فيجب أن تتحقق النتيجة q.","تكون خاطئة فقط عندما يتحقق الشرط p ولا تتحقق النتيجة q.","إذن الحالة الخاطئة هي: p صحيحة و q خاطئة."],
+rule:"الشرطية p → q خاطئة فقط في حالة p صحيحة و q خاطئة.",
+analysis:["p صحيحة و q صحيحة تجعل العبارة صحيحة.","p صحيحة و q خاطئة هي الحالة الخاطئة الوحيدة.","p خاطئة و q صحيحة لا تجعل الشرطية خاطئة.","p خاطئة و q خاطئة لا تجعل الشرطية خاطئة."],
+tip:"ركزي على الحالة الوحيدة التي تكسر الشرط."
+},
+{
+std:"التربوي",
+q:"أفضل إجراء عند ملاحظة خطأ شائع لدى الطلاب في مفهوم رياضي جديد هو:",
+choices:["تجاهل الخطأ حتى لا يتشتت الطلاب","إعادة شرح المفهوم مع مثال مضاد وتغذية راجعة","الاكتفاء بإعطاء الواجب","الانتقال للدرس التالي مباشرة"],
+answer:1,
+idea:"يقيس السؤال الجانب التربوي في علاج الأخطاء المفاهيمية.",
+steps:["الخطأ الشائع يدل على وجود فهم غير مكتمل أو تصور بديل.","الأفضل تقديم تغذية راجعة فورية ومثال مضاد يوضح موضع الخطأ.","ثم يعاد بناء المفهوم بتدرج وتطبيق قصير."],
+rule:"التقويم البنائي يستخدم أثناء التعلم لاكتشاف الأخطاء ومعالجتها قبل الانتقال.",
+analysis:["تجاهل الخطأ يزيد ترسخه.","إعادة الشرح مع مثال مضاد وتغذية راجعة هو الإجراء الصحيح.","الواجب وحده لا يعالج التصور الخاطئ.","الانتقال للدرس التالي يراكم الفجوات."],
+tip:"في أسئلة الرخصة التربوية، ابحثي عن الإجابة التي تدعم التعلم النشط والتغذية الراجعة."
+}
+];
+
+let quiz = [];
+let current = 0;
+let score = 0;
+let answered = false;
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function showSection(id){
+  ["standards","bank","quiz","plan"].forEach(x=>document.getElementById(x).style.display="none");
+  if(id==="home"){ window.scrollTo({top:0,behavior:"smooth"}); return; }
+  document.getElementById(id).style.display="grid";
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+function renderStandards(){
+  document.getElementById("stdCount").textContent = standards.length;
+  document.getElementById("qCount").textContent = questions.length;
+  const last = localStorage.getItem("math1_last_score");
+  document.getElementById("lastScore").textContent = last ? last + "%" : "—";
+  document.getElementById("standardsList").innerHTML = standards.map((s,i)=>`
+    <div class="standard">
+      <span class="tag">المجال ${i+1}</span>
+      <b>${esc(s[0])}</b>
+      <div class="muted">${esc(s[1])}</div>
+    </div>
+  `).join("");
+}
+
+function detailedHTML(item){
+  return `
+    <div class="explain" id="exp-${questions.indexOf(item)}-${Math.random()}">
+      <h3>الشرح التفصيلي</h3>
+      <div><span class="tag">فكرة السؤال</span> ${esc(item.idea)}</div>
+      <div><span class="tag">القاعدة</span> ${esc(item.rule)}</div>
+      <div><span class="tag">خطوات الحل</span></div>
+      <ol>${item.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>
+      <div><span class="tag">تحليل الخيارات</span></div>
+      <ul>${item.analysis.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+      <div><span class="tag">تنبيه للرخصة</span> ${esc(item.tip)}</div>
+    </div>
+  `;
+}
+
+function renderBank(){
+  document.getElementById("bankList").innerHTML = questions.map((item,idx)=>`
+    <div class="question">
+      <span class="tag">${esc(item.std)}</span>
+      <h3>${idx+1}. ${esc(item.q)}</h3>
+      <div class="choices">
+        ${item.choices.map((c,i)=>`<button class="choice" onclick="revealBank(this,${idx},${i})">${esc(c)}</button>`).join("")}
+      </div>
+      <div class="explain" id="bank-exp-${idx}">
+        <h3>الشرح التفصيلي</h3>
+        <div><span class="tag">الإجابة الصحيحة</span> ${esc(item.choices[item.answer])}</div>
+        <div><span class="tag">فكرة السؤال</span> ${esc(item.idea)}</div>
+        <div><span class="tag">القاعدة</span> ${esc(item.rule)}</div>
+        <ol>${item.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>
+        <ul>${item.analysis.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+        <div><span class="tag">تنبيه</span> ${esc(item.tip)}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function revealBank(btn,idx,choice){
+  const card = btn.closest(".question");
+  card.querySelectorAll(".choice").forEach((b,i)=>{
+    b.classList.remove("correct","wrong");
+    if(i===questions[idx].answer) b.classList.add("correct");
+    if(i===choice && i!==questions[idx].answer) b.classList.add("wrong");
+  });
+  document.getElementById("bank-exp-"+idx).style.display="block";
+}
+
+function shuffle(arr){
+  return arr.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+}
+
+function startQuiz(type){
+  quiz = type==="mock" ? shuffle([...questions]) : [...questions];
+  current = 0; score = 0; answered = false;
+  document.getElementById("quizTitle").textContent = type==="mock" ? "اختبار محاكي رياضيات ١" : "اختبار تشخيصي رياضيات ١";
+  document.getElementById("quizMeta").textContent = "أجيبي عن الأسئلة، وبعد كل إجابة سيظهر الشرح التفصيلي.";
+  document.getElementById("resultBox").style.display="none";
+  showSection("quiz");
+  renderQuestion();
+}
+
+function renderQuestion(){
+  answered = false;
+  const item = quiz[current];
+  document.getElementById("progressBar").style.width = ((current)/quiz.length*100) + "%";
+  document.getElementById("quizBox").innerHTML = `
+    <div class="question">
+      <span class="tag">${esc(item.std)}</span>
+      <h3>السؤال ${current+1} من ${quiz.length}</h3>
+      <h2>${esc(item.q)}</h2>
+      <div class="choices">
+        ${item.choices.map((c,i)=>`<button class="choice" onclick="answerQuiz(this,${i})">${esc(c)}</button>`).join("")}
+      </div>
+      <div class="explain" id="quizExplain">
+        <h3>الشرح التفصيلي</h3>
+        <div><span class="tag">الإجابة الصحيحة</span> ${esc(item.choices[item.answer])}</div>
+        <div><span class="tag">فكرة السؤال</span> ${esc(item.idea)}</div>
+        <div><span class="tag">القاعدة</span> ${esc(item.rule)}</div>
+        <ol>${item.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>
+        <ul>${item.analysis.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+        <div><span class="tag">تنبيه للرخصة</span> ${esc(item.tip)}</div>
+      </div>
+    </div>
+  `;
+}
+
+function answerQuiz(btn,choice){
+  if(answered) return;
+  answered = true;
+  const item = quiz[current];
+  if(choice === item.answer) score++;
+  document.querySelectorAll("#quizBox .choice").forEach((b,i)=>{
+    if(i===item.answer) b.classList.add("correct");
+    if(i===choice && i!==item.answer) b.classList.add("wrong");
+  });
+  document.getElementById("quizExplain").style.display="block";
+}
+
+function nextQuestion(){
+  if(current < quiz.length-1){
+    current++;
+    renderQuestion();
+  }else{
+    finishQuiz();
+  }
+}
+
+function finishQuiz(){
+  const pct = Math.round((score/quiz.length)*100);
+  localStorage.setItem("math1_last_score", pct);
+  document.getElementById("lastScore").textContent = pct + "%";
+  document.getElementById("progressBar").style.width = "100%";
+  const level = pct>=85 ? "ممتازة جدًا" : pct>=70 ? "جيدة وتحتاج مراجعة بسيطة" : pct>=50 ? "متوسطة وتحتاج خطة علاجية" : "تحتاج تأسيس ومراجعة منظمة";
+  document.getElementById("resultBox").style.display="block";
+  document.getElementById("resultBox").innerHTML = `
+    <h2>نتيجتك: ${pct}%</h2>
+    <p>عدد الإجابات الصحيحة: ${score} من ${quiz.length}</p>
+    <p><b>تقدير المستوى:</b> ${level}</p>
+    <p class="muted">راجعي الأسئلة التي أخطأتِ فيها من بنك الأسئلة، وركزي على القاعدة والتنبيه الشائع لكل مسألة.</p>
+    <button onclick="startQuiz('diagnostic')">إعادة الاختبار</button>
+    <button class="secondary" onclick="showSection('bank')">العودة لبنك الأسئلة</button>
+  `;
+}
+
+renderStandards();
+renderBank();
+</script>
+</body>
+</html>
+```
+ 
